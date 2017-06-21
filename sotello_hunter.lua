@@ -8,10 +8,6 @@ Define(titans_thunder 207068)
 	SpellAddBuff(titans_thunder pet_titans_thunder_buff=1)
 Define(pet_titans_thunder_buff 218638)
 
-AddFunction Consumables {
-	if not BuffPresent(flask_of_the_seventh_demon_buff) Spell(flask_of_the_seventh_demon)
-}
-
 AddFunction Pet {
 	if not pet.Present() Texture(ability_hunter_beastcall)
 	if pet.IsDead() Spell(revive_pet)
@@ -45,16 +41,13 @@ AddFunction BeastMasteryOpener {
 AddFunction BeastMasterySingle {
 	Spell(titans_thunder)
 	if pet.BuffPresent(pet_titans_thunder_buff) Spell(dire_frenzy)
-	# if pet.BuffRemaining(pet_dire_frenzy_buff) < 5 Spell(dire_frenzy)
+	if pet.BuffRemaining(pet_dire_frenzy_buff) < 5 Spell(dire_frenzy)
 	Spell(kill_command)
 	if Focus() > 90 Spell(cobra_shot)
 }
 
 AddFunction BeastMasteryAoE {
-	if not pet.BuffPresent(pet_beast_cleave_buff) Spell(multi_shot)
-	if pet.BuffRemaining(pet_dire_frenzy_buff) < 5 Spell(dire_frenzy)
-	if pet.BuffRemaining(pet_beast_cleave_buff) > 2 and Focus() > 60 Spell(kill_command)
-	if pet.BuffRemaining(pet_beast_cleave_buff) > 2 and BuffPresent(bestial_wrath_buff) Spell(cobra_shot)
+
 }
 
 AddCheckBox(opt_aoe L(AoE) default specialization=beast_mastery)

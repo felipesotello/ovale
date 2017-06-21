@@ -47,7 +47,6 @@ AddFunction BeastMasterySingle {
 }
 
 AddFunction BeastMasteryAoE {
-
 }
 
 AddCheckBox(opt_aoe L(AoE) default specialization=beast_mastery)

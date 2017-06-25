@@ -1,0 +1,6 @@
+Define(mend_pet 136)
+	SpellAddBuff(mend_pet pet_mend_pet_buff=1)
+Define(pet_mend_pet_buff 136)
+Define(titans_thunder 207068)
+	SpellAddBuff(titans_thunder pet_titans_thunder_buff=1)
+Define(pet_titans_thunder_buff 218638)

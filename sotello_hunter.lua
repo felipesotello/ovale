@@ -49,16 +49,22 @@ AddFunction BeastMasterySingle {
 AddFunction BeastMasteryAoE {
 }
 
-AddCheckBox(opt_aoe L(AoE) default specialization=beast_mastery)
-AddCheckBox(opt_opener L("Opener") default specialization=beast_mastery)
+AddCheckBox(opt_normal L("Normal") default specialization=beast_mastery)
+AddCheckBox(opt_aoe L("AoE") default specialization=beast_mastery)
 
 AddIcon specialization=beast_mastery {
 	Pet()
-	if CheckBoxOn(opt_opener) BeastMasteryOpener()
+	BeastMasteryOpener()
+	BeastMasterySingle()
+}
+
+AddIcon specialization=beast_mastery checkbox=opt_normal {
+	Pet()
 	BeastMasterySingle()
 }
 
 AddIcon specialization=beast_mastery checkbox=opt_aoe {
+    Pet()
 	BeastMasteryAoE()
 }
 

@@ -1,6 +1,8 @@
 Include(ovale_common)
 Include(ovale_hunter_spells)
 
+Define(pet_beast_cleave_buff 118455)
+
 Define(mend_pet 136)
 	SpellAddBuff(mend_pet pet_mend_pet_buff=1)
 Define(pet_mend_pet_buff 136)
@@ -36,7 +38,7 @@ AddFunction BeastMasterySingle {
 }
 
 AddFunction BeastMasteryAoE {
-
+    if pet.BuffRemaining(pet_beast_cleave_buff less 1) Spell(multishot)
 }
 
 AddFunction BeastMasteryCooldowns {

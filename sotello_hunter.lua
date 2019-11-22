@@ -12,8 +12,6 @@ Define(pet_titans_thunder_buff 218638)
 SpellAddBuff(mend_pet pet_mend_pet_buff=1)
 SpellAddBuff(titans_thunder pet_titans_thunder_buff=1)
 
-
-
 AddFunction Pet {
     if not pet.Present() Texture(ability_hunter_beastcall)
     if pet.IsDead() Spell(revive_pet)
@@ -31,19 +29,24 @@ AddFunction KillCommand {
     if pet.Present() and pet.IsFeared(no) and pet.IsIncapacitated(no) and pet.IsStunned(no) Spell(kill_command)
 }
 
-AddFunction BeastMasterySingle {
-    if BuffPresent(dire_beast_buff) Spell(titans_thunder)
-    Spell(a_murder_of_crows)
-    if BuffPresent(bestial_wrath_buff) Spell(dire_beast)
+AddFunction BeastMasteryMain {
+    if pet.BuffRemaining(pet_frenzy_buff) < 2 Spell(barbed_shot)
+    Spell(bestial_wrath)
+    Spell(aspect_of_the_wild)
     Spell(kill_command)
-    Spell(dire_beast)
-    if BuffPresent(bestial_wrath_buff) Spell(cobra_shot)
-    if Focus() > 90 Spell(cobra_shot)
+    if Charges(barbed_shot count=0) > 1.5 Spell(barbed_shot)
+    Spell(cobra_shot)
+    Spell(barbed_shot)
     Spell(mend_pet)
 }
 
-AddFunction BeastMasteryAoE {
-    if pet.BuffRemaining(pet_beast_cleave_buff less 1) Spell(multishot)
+AddFunction BeastMasterySingle {
+    if pet.BuffRemaining(pet_frenzy_buff) < 2 Spell(barbed_shot)
+    Spell(kill_command)
+    if Charges(barbed_shot count=0) > 1.5 Spell(barbed_shot)
+    Spell(cobra_shot)
+    Spell(barbed_shot)
+    Spell(mend_pet)
 }
 
 AddFunction BeastMasteryCooldowns {
@@ -51,20 +54,31 @@ AddFunction BeastMasteryCooldowns {
     Spell(aspect_of_the_wild)
 }
 
-AddCheckBox(opt_cds L("CDs") default specialization=beast_mastery)
-AddCheckBox(opt_aoe L("AoE") default specialization=beast_mastery)
+AddFunction BeastMasteryMultiple {
+    if pet.BuffRemaining(pet_beast_cleave_buff less 1) Texture(ability_upgrademoonglaive)
+}
 
-AddIcon specialization=beast_mastery {
+AddCheckBox(opt_main L("Main") default specialization=beast_mastery)
+AddCheckBox(opt_single L("Single") default specialization=beast_mastery)
+AddCheckBox(opt_cooldowns L("Cooldowns") default specialization=beast_mastery)
+AddCheckBox(opt_multiple L("Multiple") default specialization=beast_mastery)
+
+AddIcon specialization=beast_mastery checkbox=opt_main {
+    Pet()
+    BeastMasteryMain()
+}
+
+AddIcon specialization=beast_mastery checkbox=opt_single {
     Pet()
     BeastMasterySingle()
 }
 
-AddIcon specialization=beast_mastery checkbox=opt_cds {
+AddIcon specialization=beast_mastery checkbox=opt_cooldowns {
     BeastMasteryCooldowns()
 }
 
-AddIcon specialization=beast_mastery checkbox=opt_aoe {
-    BeastMasteryAoE()
+AddIcon specialization=beast_mastery checkbox=opt_multiple {
+    BeastMasteryMultiple()
 }
 
 AddIcon specialization=beast_mastery size=small {
